@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "467969116989",
+    "project_id": "crypto-pocket-e25d5",
+    "storage_bucket": "crypto-pocket-e25d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467969116989:android:169f19bd4811f2837b5354",
+        "android_client_info": {
+          "package_name": "com.example.crypto_pocket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467969116989-n87vab7ibi3ip08marpc1cdb3l2vksje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdfybEIE0RycF1GgEMK0IfXBcb6YCXi9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467969116989-n87vab7ibi3ip08marpc1cdb3l2vksje.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "467969116989-m5uvi07dfufm6tr5fg7tnum191g0al19.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cryptoPocket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
