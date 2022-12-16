@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:467969116989:ios:43857b27df09826f7b5354</string>
+	<key>DATABASE_URL</key>
+	<string>https://crypto-pocket-e25d5-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>
