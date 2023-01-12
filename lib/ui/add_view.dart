@@ -24,51 +24,84 @@ class _AddViewState extends State<AddView> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DropdownButton(
-            value: dropValue,
-             onChanged: (String? value) {
-              setState(() {
-                dropValue = value;
-              });
-             
-            },
-            items: coins.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem(
-                 child: Text(value),
-                value: value,
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton(
+              icon: Icon(
+               Icons.money_off_csred_outlined,
+              ),
+              value: dropValue,
+            focusColor: Colors.lightGreen,
+               onChanged: (String? value) {
+                setState(() {
+                  dropValue = value;
+                });
                
-              );
-            }).toList(),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width / 1.3,
-            child: TextFormField(
-              controller: _amountController,
-              decoration: InputDecoration(
-                labelText: "coin amount",
+              },
+              items: coins.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem(
+                   child: Text(value),
+                  value: value,
+                  
+                 
+                );
+              }).toList(),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.3,
+              child: TextFormField(
+                controller: _amountController,
+                decoration: InputDecoration(
+                  labelText: "coin amount 💸",
+                  fillColor: Colors.lightGreen,
+                ),
+                
               ),
             ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width / 1.4,
-            height: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              color: Colors.white,
+             SizedBox(
+                height: 16.0,
             ),
-            child: MaterialButton(
-              onPressed: () async {
-                await addCoin(dropValue, _amountController.text);
-                Navigator.of(context).pop();
-              },
-              child: Text("Add"),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.4,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+              ),
+              child: MaterialButton(
+                onPressed: () async {
+                  await addCoin(dropValue, _amountController.text);
+                  Navigator.of(context).pop();
+                },
+                child: Text("Add 🤑"),
+                color: Colors.lightGreen,
+              ),
+              
             ),
-          ),
-        ],
-      ),
+            SizedBox(
+                height: 16.0,
+            ),
+              Container(
+              width: MediaQuery.of(context).size.width / 1.4,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: Colors.white,
+              ),
+              child: MaterialButton(
+                onPressed: () async {
+                  await subtractCoin(dropValue, _amountController.text);
+                  Navigator.of(context).pop();
+                },
+                child: Text("Subtract 😓"),
+                color: Colors.lightGreen,
+              ),
+              
+            ),
+          ],
+        ),
+     
     );
   }
 }

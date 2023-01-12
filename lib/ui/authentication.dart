@@ -34,7 +34,7 @@ class _AuthenticationState extends State<Authentication> {
                 Container(
                   width: MediaQuery.of(context).size.width/1.3,
                   child: TextFormField(
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Color.fromARGB(246, 0, 0, 0)),
                     controller: _EmailFeild,
                     // ignore: prefer_const_constructors
                     decoration: InputDecoration(
@@ -57,7 +57,7 @@ class _AuthenticationState extends State<Authentication> {
                 Container(
                   width: MediaQuery.of(context).size.width/1.3,
                   child: TextFormField(
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     controller: _PasswordFeild,
                     obscureText: true,
                     // ignore: prefer_const_constructors
@@ -81,10 +81,12 @@ class _AuthenticationState extends State<Authentication> {
                 Container(
                   width: MediaQuery.of(context).size.width / 1.3,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(1.3),
+                    borderRadius: BorderRadius.circular(15.3),
                     color: Colors.redAccent,
                   ),
                   child: MaterialButton(
+                    highlightColor: Colors.red[900],
+                  
                       onPressed: () async {
                         bool shouldNavigate =
                             await signIn(_EmailFeild.text, _PasswordFeild.text);
@@ -106,10 +108,11 @@ class _AuthenticationState extends State<Authentication> {
                 Container(
                   width: MediaQuery.of(context).size.width / 1.3,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(1.3),
+                    borderRadius: BorderRadius.circular(15.3),
                     color: Colors.redAccent,
                   ),
                   child: MaterialButton(
+                      highlightColor: Colors.red[900],
                       onPressed: () async {
                         bool shouldNavigate = await register(
                             _EmailFeild.text, _PasswordFeild.text);

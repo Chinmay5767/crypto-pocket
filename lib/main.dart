@@ -1,3 +1,4 @@
+import 'package:crypto_pocket/ui/add_view.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Crypto Wallet',
-      home: Authentication(),
+      home: AddView(),
     );
   }
 }
