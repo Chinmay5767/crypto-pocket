@@ -28,9 +28,7 @@ class _AddViewState extends State<AddView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButton(
-              icon: Icon(
-               Icons.money_off_csred_outlined,
-              ),
+              
               value: dropValue,
             focusColor: Colors.lightGreen,
                onChanged: (String? value) {
