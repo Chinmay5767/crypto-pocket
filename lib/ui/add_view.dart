@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:crypto_pocket/net/flutterfire_function.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -28,7 +30,11 @@ class _AddViewState extends State<AddView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButton(
-              
+           
+              icon: Icon(
+                Icons.monetization_on,
+                color: Colors.lightGreen,
+              ),
               value: dropValue,
             focusColor: Colors.lightGreen,
                onChanged: (String? value) {
@@ -39,8 +45,14 @@ class _AddViewState extends State<AddView> {
               },
               items: coins.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem(
-                   child: Text(value),
+                   child: Container(
+                    
+                    child: Text(value),
+                    padding:EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.5) ,
+                    
+                    ),
                   value: value,
+                 
                   
                  
                 );
