@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../net/flutterfire_function.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
 
@@ -16,16 +16,20 @@ class _AuthenticationState extends State<Authentication> {
   // ignore: non_constant_identifier_names
   final TextEditingController _EmailFeild = TextEditingController();
   final TextEditingController _PasswordFeild = TextEditingController();
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Crypto Pocket"),
+        centerTitle: true,
+      ),
       body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           // ignore: prefer_const_constructors
           decoration: BoxDecoration(
-            color: Colors.grey,
+            color: Colors.tealAccent,
           ),
           child: Flexible(
             child: Column(

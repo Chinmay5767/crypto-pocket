@@ -47,6 +47,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   custom_dropdown: ^0.0.2
   simple_animations: ^5.0.0+3
+  fluttertoast: ^8.1.2
   
 
 dev_dependencies:

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Crypto Wallet',
-      home: AddView(),
+      home: Authentication(),
     );
   }
 }

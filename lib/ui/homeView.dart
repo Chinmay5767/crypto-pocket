@@ -90,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
                               style: TextStyle(color: Colors.white),
                             ),
                             Text(
-                              "\$${getValues(document.id, (document.data() as Map?)?['Amount'])?.toStringAsFixed(2)}",
+                              "\₹${getValues(document.id, (document.data() as Map?)?['Amount'])?.toStringAsFixed(2)}",
                               style: TextStyle(color: Colors.white),
                             ),
                             IconButton(
