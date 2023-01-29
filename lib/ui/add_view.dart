@@ -13,11 +13,13 @@ class AddView extends StatefulWidget {
 }
 
 class _AddViewState extends State<AddView> {
-  List<String> coins = [
+  List<String> Coins = [
     "bitcoin",
-   
+    "dogecoin",
     "tether",
     "ethereum",
+    "binancecoin",
+    "ripple",
   ];
 
   String? dropValue = "bitcoin";
@@ -63,7 +65,7 @@ class _AddViewState extends State<AddView> {
                   });
                  
                 },
-                items: coins.map<DropdownMenuItem<String>>((String value) {
+                items: Coins.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem(
                      child: Container(
                       

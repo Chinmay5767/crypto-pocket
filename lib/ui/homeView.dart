@@ -18,6 +18,9 @@ class _HomeViewState extends State<HomeView> {
   double bitcoin = 0.0;
   double ethereum = 0.0;
   double tether = 0.0;
+  double dogecoin = 0.0;
+  double binancecoin = 0.0;
+  double ripple = 0.0;
   @override
   @override
   void initState() {
@@ -28,6 +31,9 @@ class _HomeViewState extends State<HomeView> {
     bitcoin = await getPrice('bitcoin');
     ethereum = await getPrice('ethereum');
     tether = await getPrice('tether');
+    dogecoin = await getPrice('dogecoin');
+   binancecoin = await getPrice('binancecoin');
+     ripple = await getPrice('ripple');
     setState(() {});
   }
 
@@ -39,19 +45,26 @@ class _HomeViewState extends State<HomeView> {
         return ethereum * amount;
       } else if (id == "tether") {
         return tether * amount;
+      } else if (id == "dogecoin") {
+        return dogecoin * amount;
+      }
+      else if (id == "binancecoin") {
+        return binancecoin * amount;
+      }
+        else if (id == "ripple") {
+        return ripple * amount;
       }
     }
 
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        
         title: Text("home view"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightGreen,
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.green,
+          color: Colors.lightGreen,
         ),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -80,7 +93,7 @@ class _HomeViewState extends State<HomeView> {
                           height: MediaQuery.of(context).size.height / 12,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.0),
-                              color: Colors.redAccent),
+                              color: Color.fromARGB(255, 0, 91, 3)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -111,10 +124,8 @@ class _HomeViewState extends State<HomeView> {
                   );
                 }),
           ),
-            
         ),
       ),
-      
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
