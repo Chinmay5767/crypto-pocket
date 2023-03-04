@@ -80,6 +80,7 @@ class _AuthenticationState extends State<Authentication> {
                       style: TextStyle(color: Colors.white),
                       controller: _PasswordFeild,
                       obscureText: true,
+                      //obscure text is used to hide what you put input as a password
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         hintText: "Password",
@@ -144,7 +145,7 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 35,
-                  ),
+                  ), 
                   Container(
                     width: MediaQuery.of(context).size.width / 1.3,
                     decoration: BoxDecoration(
@@ -199,3 +200,9 @@ class _AuthenticationState extends State<Authentication> {
     );
   }
 }
+
+
+
+
+
+/* you can also store email in variablr using on changed function in text form feild*/

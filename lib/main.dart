@@ -1,5 +1,6 @@
 import 'package:crypto_pocket/ui/add_view.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
+import 'package:crypto_pocket/ui/prices.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

@@ -21,6 +21,7 @@ class _HomeViewState extends State<HomeView> {
   double dogecoin = 0.0;
   double binancecoin = 0.0;
   double ripple = 0.0;
+  double total = 0.0;
   @override
   @override
   void initState() {
@@ -29,11 +30,14 @@ class _HomeViewState extends State<HomeView> {
 
   getValue() async {
     bitcoin = await getPrice('bitcoin');
+
     ethereum = await getPrice('ethereum');
     tether = await getPrice('tether');
     dogecoin = await getPrice('dogecoin');
-   binancecoin = await getPrice('binancecoin');
-     ripple = await getPrice('ripple');
+    binancecoin = await getPrice('binancecoin');
+    ripple = await getPrice('ripple');
+    total =
+        bitcoin + tether + ethereum + tether + dogecoin + binancecoin + ripple;
     setState(() {});
   }
 
@@ -47,11 +51,9 @@ class _HomeViewState extends State<HomeView> {
         return tether * amount;
       } else if (id == "dogecoin") {
         return dogecoin * amount;
-      }
-      else if (id == "binancecoin") {
+      } else if (id == "binancecoin") {
         return binancecoin * amount;
-      }
-        else if (id == "ripple") {
+      } else if (id == "ripple") {
         return ripple * amount;
       }
     }
@@ -62,67 +64,71 @@ class _HomeViewState extends State<HomeView> {
         title: Text("home view"),
         backgroundColor: Colors.lightGreen,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.lightGreen,
-        ),
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Center(
-          child: Container(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('Users')
-                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                    .collection('Coins')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView(
-                    children: snapshot.data!.docs.map((document) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4.0, horizontal: 4.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          height: MediaQuery.of(context).size.height / 12,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              color: Color.fromARGB(255, 0, 91, 3)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 3.0,
-                              ),
-                              Text(
-                                "Coin: ${document.id}",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                "\₹${getValues(document.id, (document.data() as Map?)?['Amount'])?.toStringAsFixed(2)}",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              IconButton(
-                                  onPressed: () async {
-                                    await removeCoin(document.id);
-                                  },
-                                  icon: Icon(
-                                    Icons.close_sharp,
-                                    color: Color.fromARGB(246, 0, 0, 0),
-                                  ))
-                            ],
-                          ),
-                        ),
+      body: SingleChildScrollView(
+        child: Container(
+          
+          decoration: BoxDecoration(
+            color: Colors.lightGreen,
+          ),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Center(
+            child: Container(
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(FirebaseAuth.instance.currentUser?.uid)
+                      .collection('Coins')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }).toList(),
-                  );
-                }),
+                    }
+                    return ListView(
+                      children: snapshot.data!.docs.map((document) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 4.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.3,
+                            height: MediaQuery.of(context).size.height / 12,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12.0),
+                                color: Color.fromARGB(255, 0, 91, 3)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 3.0,
+                                ),
+                                Text(
+                                  "Coin: ${document.id}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  "\₹${getValues(document.id, (document.data() as Map?)?['Amount'])?.toStringAsFixed(2)}",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      await removeCoin(document.id);
+                                    },
+                                    icon: Icon(
+                                      Icons.close_sharp,
+                                      color: Color.fromARGB(246, 0, 0, 0),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }),
+            ),
+           
           ),
         ),
       ),
