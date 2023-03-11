@@ -1,11 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
-
+import 'dart:async';
+//import 'dart:html';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../net/flutterfire_function.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
+import '../global.dart' as global;
+
 
 class Authentication extends StatefulWidget {
   const Authentication({super.key});
@@ -19,14 +21,29 @@ class _AuthenticationState extends State<Authentication> {
   final TextEditingController _EmailFeild = TextEditingController();
   final TextEditingController _PasswordFeild = TextEditingController();
   bool isLoading = false;
-   bool isLoading2 = false;
+  bool isLoading2 = false;
+  bool _showMessage = false;
+ 
+
+  void _onPressed_for_message() {
+    setState(() {
+      _showMessage = true;
+      Timer(Duration(seconds: 3), () {
+        setState(() {
+          _showMessage = false;
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text("Crypto Pocket",
-        style: TextStyle(color: Colors.orange),
+        title: Text(
+          "Crypto Pocket",
+          style: TextStyle(color: Colors.orange),
         ),
         centerTitle: true,
         elevation: 0,
@@ -118,11 +135,29 @@ class _AuthenticationState extends State<Authentication> {
                                 builder: (context) => HomeView(),
                               ),
                             );
+                          } else {
+                            setState(() {
+                              global.error = "Incorrect password";
+                              _showMessage = true;
+                              Timer(Duration(seconds: 3), (() {
+                                setState(() {
+                                  _showMessage = false;
+                                });
+                              }));
+                            });
                           }
                           if (isLoading) return;
-                          setState(() { isLoading = true; }, );
-                          await Future.delayed(Duration(seconds: 5));
-                           setState(() { isLoading = false; }, );
+                          setState(
+                            () {
+                              isLoading = true;
+                            },
+                          );
+                          await Future.delayed(Duration(seconds: 3));
+                          setState(
+                            () {
+                              isLoading = false;
+                            },
+                          );
                         },
                         child: isLoading
                             ? Row(
@@ -134,18 +169,19 @@ class _AuthenticationState extends State<Authentication> {
                                     SizedBox(
                                       width: 24.0,
                                     ),
-                                    Text("Please wait...",
-                                    style: TextStyle(color: Colors.orange),
+                                    Text(
+                                      "Please wait...",
+                                      style: TextStyle(color: Colors.orange),
                                     )
                                   ])
-                            : Text("Log in",
-                            style: TextStyle(color: Colors.yellow),
-                            )
-                            ),
+                            : Text(
+                                "Log in",
+                                style: TextStyle(color: Colors.yellow),
+                              )),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 35,
-                  ), 
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width / 1.3,
                     decoration: BoxDecoration(
@@ -165,11 +201,29 @@ class _AuthenticationState extends State<Authentication> {
                                 builder: (context) => HomeView(),
                               ),
                             );
+                          } else {
+                            setState(() {
+                           
+                              _showMessage = true;
+                              Timer(Duration(seconds: 3), (() {
+                                setState(() {
+                                  _showMessage = false;
+                                });
+                              }));
+                            });
                           }
-                            if (isLoading2) return;
-                          setState(() { isLoading2 = true; }, );
-                          await Future.delayed(Duration(seconds: 5));
-                           setState(() { isLoading2 = false; }, );
+                          if (isLoading2) return;
+                          setState(
+                            () {
+                              isLoading2 = true;
+                            },
+                          );
+                          await Future.delayed(Duration(seconds: 3));
+                          setState(
+                            () {
+                              isLoading2 = false;
+                            },
+                          );
                         },
                         child: isLoading2
                             ? Row(
@@ -181,22 +235,25 @@ class _AuthenticationState extends State<Authentication> {
                                     SizedBox(
                                       width: 24.0,
                                     ),
-                                    Text("Please wait...",
-                                    style: TextStyle(color: Colors.orange),
+                                    Text(
+                                      "Please wait...",
+                                      style: TextStyle(color: Colors.orange),
                                     )
                                   ])
-                            : Text("Register",
-                            style: TextStyle(color: Colors.yellow),)
-                        ),
-                      
+                            : Text(
+                                "Register",
+                                style: TextStyle(color: Colors.yellow),
+                              )),
                   ),
+                  const SizedBox(height: 15.0),
+                  if (_showMessage)
+                    Text(global.error, style: TextStyle(fontSize: 18, color: Colors.orange), ),
                 ],
               ),
             ),
           ),
         ),
       ),
-      
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../global.dart' as global;
 
 Future<bool> signIn(String email, String password) async {
   try {
@@ -19,8 +20,10 @@ Future<bool> register(String email, String password) async {
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
-      print('The password provided is too weak');
+      print('Password provided is too weak');
+      global.error = "Password provided is too weak";
     } else if (e.code == 'email-already-in-use') {
+      global.error = "The account already exist for that email.";
       print('The account already exist for that email.');
     }
     return false;

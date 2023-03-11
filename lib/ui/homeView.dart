@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_pocket/net/api_method.dart';
 import 'package:crypto_pocket/net/flutterfire_function.dart';
 import 'package:crypto_pocket/ui/add_view.dart';
+import 'package:crypto_pocket/ui/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -63,6 +64,24 @@ class _HomeViewState extends State<HomeView> {
       appBar: AppBar(
         title: Text("home view"),
         backgroundColor: Colors.lightGreen,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right:23.0),
+            child: IconButton( icon: Icon(
+              Icons.account_box_rounded,
+             size: 50,
+             color: Colors.white,
+            ),
+            onPressed: () {
+                Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => ProfileView()),
+              ),
+            );
+            },),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
