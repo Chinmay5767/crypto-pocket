@@ -1,22 +1,9 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// class UserModel {
-//   final String uid;
-//   final String email;
-//   final String name;
-//   final String profileImageUrl;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto_pocket/ui/profile/avatar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-//   UserModel({
-//     required this.uid,
-//     // required keyword is used to mark a parameter as mandatory when 
-//     //an object of the class is created, and a compile-time error will be thrown if it is omitted.
-//     required this.email,
-//     required this.name,
-//     required this.profileImageUrl,
-//   });
-// }
-
+import '../model/user_model.dart';
 
 // class ProfileView extends StatefulWidget {
 //   static String route = "profile-view";
@@ -26,11 +13,8 @@
 // }
 
 // class _ProfileViewState extends State<ProfileView> {
-  
-//   //UserModel _currentUser = locator.get<UserController>().currentUser;
-//   final User? user = FirebaseAuth.instance.currentUser;
-//     final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
-//  final DocumentReference userDoc = userCollection.doc(user!.uid);
+//  // late UserModel _currentUser;
+//   // late keyword shows that it  will be initialized later
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -51,11 +35,12 @@
 //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //                 children: <Widget>[
 //                   // Avatar(
-//                   //   avatarUrl: _currentUser?.avatarUrl,
-//                   //   onTap: () {},
+//                   //   avatarUrl: _currentUser.avatarUrl,
+//                   //   onTap: () {
+//                   //     // TODO:  upload the image to firestore
+//                   //   },
 //                   // ),
-//                   Text(
-//                       "Hi ${ 'nice to see you here.'}"),
+//                   Text("hi, "),
 //                 ],
 //               ),
 //             ),
@@ -106,13 +91,6 @@
 //     );
 //   }
 // }
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
@@ -121,35 +99,21 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
- 
-String userId = FirebaseAuth.instance.currentUser!.uid;
   @override
-  
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          
-          children: [
-            StreamBuilder<DocumentSnapshot>(
-  stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
-  builder: (context, snapshot) {
-    if (!snapshot.hasData) {
-        return CircularProgressIndicator();
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return Scaffold(
+        body: Center(
+          child: Text("welcome, ${user.displayName ?? user.email}"),
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: Center(
+          child: Text("please login to continue"),
+        ),
+      );
     }
-    var userData = snapshot.data!;
-    return Column(
-        children: [
-          
-          Text(userData['name']),
-          Text(userData['email']),
-        ],
-    );
-  },
-)
-
-          ]),
-      ),
-    );
   }
 }

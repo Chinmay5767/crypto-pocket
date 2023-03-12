@@ -3,7 +3,6 @@ import 'dart:async';
 //import 'dart:html';
 import 'dart:ui';
 import 'package:crypto_pocket/ui/profile_view.dart';
-import 'package:crypto_pocket/ui/register.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../net/flutterfire_function.dart';
@@ -11,17 +10,18 @@ import 'package:crypto_pocket/ui/homeView.dart';
 import '../global.dart' as global;
 
 
-class Authentication extends StatefulWidget {
-  const Authentication({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<Authentication> createState() => _AuthenticationState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _AuthenticationState extends State<Authentication> {
+class _RegisterState extends State<Register> {
   // ignore: non_constant_identifier_names
   final TextEditingController _EmailFeild = TextEditingController();
   final TextEditingController _PasswordFeild = TextEditingController();
+   final TextEditingController _UserNameFeild = TextEditingController();
   bool isLoading = false;
   bool isLoading2 = false;
   bool _showMessage = false;
@@ -44,7 +44,7 @@ class _AuthenticationState extends State<Authentication> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          "Crypto Pocket",
+          "Register",
           style: TextStyle(color: Colors.orange),
         ),
         centerTitle: true,
@@ -71,6 +71,29 @@ class _AuthenticationState extends State<Authentication> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.white),
+                      controller: _UserNameFeild,
+                      // ignore: prefer_const_constructors
+                      decoration: InputDecoration(
+                        hintText: "username",
+                        // ignore: prefer_const_constructors
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        labelText: "username",
+                        // ignore: prefer_const_constructors
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                   Container(
                     width: MediaQuery.of(context).size.width / 1.3,
                     child: TextFormField(
                       style: TextStyle(color: Colors.white),
@@ -127,8 +150,8 @@ class _AuthenticationState extends State<Authentication> {
                     child: MaterialButton(
                         highlightColor: Colors.red[900],
                         onPressed: () async {
-                          bool shouldNavigate = await signIn(
-                              _EmailFeild.text, _PasswordFeild.text);
+                          bool shouldNavigate = await register(
+                              _EmailFeild.text, _PasswordFeild.text, _UserNameFeild.text);
                           if (shouldNavigate) {
                             //navigate
                             Navigator.push(
@@ -139,7 +162,7 @@ class _AuthenticationState extends State<Authentication> {
                             );
                           } else {
                             setState(() {
-                              global.error = "Incorrect password";
+                           
                               _showMessage = true;
                               Timer(Duration(seconds: 3), (() {
                                 setState(() {
@@ -148,20 +171,20 @@ class _AuthenticationState extends State<Authentication> {
                               }));
                             });
                           }
-                          if (isLoading) return;
+                          if (isLoading2) return;
                           setState(
                             () {
-                              isLoading = true;
+                              isLoading2 = true;
                             },
                           );
                           await Future.delayed(Duration(seconds: 3));
                           setState(
                             () {
-                              isLoading = false;
+                              isLoading2 = false;
                             },
                           );
                         },
-                        child: isLoading
+                        child: isLoading2
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -177,33 +200,11 @@ class _AuthenticationState extends State<Authentication> {
                                     )
                                   ])
                             : Text(
-                                "Log in",
+                                "Register",
                                 style: TextStyle(color: Colors.yellow),
                               )),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 35,
-                  ),
-                 Container(
-                  child: GestureDetector(
-                    onTap: () {
-                        Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Register(),
-                              ),
-                            );
-                    },
-                    child: Text(
-                      "not registered, then click here to register",
-                     style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.orange
-                     ),
-                    ),
-                  ),
-                 ),
-                 
+                  const SizedBox(height: 15.0),
                   if (_showMessage)
                     Text(global.error, style: TextStyle(fontSize: 18, color: Colors.orange), ),
                 ],
@@ -217,7 +218,3 @@ class _AuthenticationState extends State<Authentication> {
 }
 
 
-
-
-
-/* you can also store email in variablr using on changed function in text form feild*/
