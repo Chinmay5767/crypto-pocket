@@ -10,7 +10,7 @@ import 'package:crypto_pocket/net/api_method.dart';
 import 'package:crypto_pocket/net/flutterfire_function.dart';
 
 class Prices extends StatefulWidget {
-  Prices({super.key});
+
 
   @override
   State<Prices> createState() => _PricesState();

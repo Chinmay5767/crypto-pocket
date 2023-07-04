@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:crypto_pocket/ui/authentication.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../global.dart' as globals;
 
-import '../model/user_model.dart';
+import '../model/firestoreImage.dart';
+import '../resources/add_data.dart';
 
 class ProfileView extends StatefulWidget {
   static String route = "profile-view";
-
+  String imageLink;
+  ProfileView(this.imageLink);
   @override
   _ProfileViewState createState() => _ProfileViewState();
 }
@@ -19,11 +24,20 @@ class _ProfileViewState extends State<ProfileView> {
   // late keyword shows that it  will be initialized later
   final TextEditingController _newPasswordField = TextEditingController();
   final TextEditingController _verifyPasswordField = TextEditingController();
- 
 
   User? user = FirebaseAuth.instance.currentUser;
   String Message = "";
   bool _showMessage2 = false;
+  String? name = "";
+  String? email = "k";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    name = user?.displayName ?? user?.email;
+    email=user?.email;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +57,14 @@ class _ProfileViewState extends State<ProfileView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  // Avatar(
-                  //   avatarUrl: _currentUser.avatarUrl,
-                  //   onTap: () {
-                  //     // TODO:  upload the image to firestore
-                  //   },
-                  // ),
-                  Text("hi, "),
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        radius: 66,
+                        backgroundImage: NetworkImage(widget.imageLink),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -60,7 +75,6 @@ class _ProfileViewState extends State<ProfileView> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: <Widget>[
-                   
                     Text(
                       "welcome, ${user?.displayName ?? user?.email}",
                       style: TextStyle(fontSize: 20.0),
@@ -69,54 +83,82 @@ class _ProfileViewState extends State<ProfileView> {
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            "Manage Password",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          TextFormField(
-                            decoration:
-                                InputDecoration(hintText: "New Password"),
-                            controller: _newPasswordField,
-                          ),
-                          TextFormField(
-                            decoration:
-                                InputDecoration(hintText: "Repeat Password"),
-                            controller: _verifyPasswordField,
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 15,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 3.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.white),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  "User Name: ${name!}",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 17,
                           ),
-                          MaterialButton(
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 15,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 3.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                                color: Colors.white),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  "email address: ${email!}",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                         
+                          SizedBox(height: 35,),
+                          Container(
+                            width: 240,
+                            height: 50,
+                            child: MaterialButton(
+                                                  
                             onPressed: () {
-                              if (_verifyPasswordField.text !=
-                                  _newPasswordField.text) {
-                                setState(() {
-                                  Message = "Incorrect password";
-                                  _showMessage2 = true;
-                                  Timer(Duration(seconds: 3), (() {
-                                    setState(() {
-                                      _showMessage2 = false;
-                                    });
-                                  }));
-                                });
-                              } else if (_newPasswordField.text.length < 6) {
-                                setState(() {
-                                  Message = "Password is too weak";
-                                  _showMessage2 = true;
-                                  Timer(Duration(seconds: 3), (() {
-                                    setState(() {
-                                      _showMessage2 = false;
-                                    });
-                                  }));
-                                });
-                              } else {
-                                user?.updatePassword(_newPasswordField.text);
-                              }
-                            },
-                            child: Text("Save profile"),
+                                                Navigator.push(
+                             context,
+                            MaterialPageRoute(
+                                       builder: ((context) => Authentication()),
+                                          ),
+                                           );
+                               },
+                                               color: Colors.blue, // Set the button color to blue
+                                                  child: Text(
+                                             'Sign Out',
+                                                style: TextStyle(
+                                                   color: Colors.white, // Set the text color to white
+                                               ),
+                                          ),
+                                             ),
                           ),
-                          if (_showMessage2) Text(Message),
-                          Text("Total Amount: ₹${globals.total}")
                         ],
                       ),
                     ),

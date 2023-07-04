@@ -12,7 +12,7 @@ import '../global.dart' as global;
 
 
 class Authentication extends StatefulWidget {
-  const Authentication({super.key});
+
 
   @override
   State<Authentication> createState() => _AuthenticationState();

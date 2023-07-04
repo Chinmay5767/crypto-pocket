@@ -8,7 +8,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AddView extends StatefulWidget {
-  const AddView({super.key});
+
 
   @override
   State<AddView> createState() => _AddViewState();
@@ -154,7 +154,33 @@ class _AddViewState extends State<AddView> {
               height: 50,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.5,
+              width: MediaQuery.of(context).size.width / 1.4,
+              height: 45,
+            
+              child: MaterialButton(
+               shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.0),
+                ), 
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => HomeView()),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Home Page",
+                  selectionColor: Colors.purple,
+                ),
+                color: Colors.amber,
+              ),
+            ),
+               SizedBox(
+              height: 16,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.4,
               height: 45,
             
               child: MaterialButton(
@@ -176,7 +202,6 @@ class _AddViewState extends State<AddView> {
                 color: Colors.amber,
               ),
             ),
-            
           ],
         ),
       ),

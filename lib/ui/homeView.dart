@@ -7,12 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../global.dart' as global;
 import '../global.dart' as globals;
+import '../model/firestoreImage.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
-
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -24,11 +24,13 @@ class _HomeViewState extends State<HomeView> {
   double dogecoin = 0.0;
   double binancecoin = 0.0;
   double ripple = 0.0;
-  
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   @override
   void initState() {
     getValue();
+    String? name = user?.displayName ?? user?.email;
+    getImageLinkForName(name!);
   }
 
   getValue() async {
@@ -39,29 +41,54 @@ class _HomeViewState extends State<HomeView> {
     dogecoin = await getPrice('dogecoin');
     binancecoin = await getPrice('binancecoin');
     ripple = await getPrice('ripple');
-  
-    setState(() {});
+
+     setState(() {});
+  }
+
+  // image url fetching
+  String GlobalImageLink =
+      "https://p.kindpng.com/picc/s/146-1468338_icon-profile-blue-transparent-hd-png-download.png";
+  Future<void> getImageLinkForName(String name) async {
+    try {
+      // Query the Firestore collection
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('userProfile')
+          .where('name', isEqualTo: name)
+          .get();
+
+      // Extract the image link
+      String imageLink = '';
+      snapshot.docs.forEach((doc) {
+        final data = doc.data() as dynamic;
+        imageLink = data['imageLink'];
+      });
+
+      GlobalImageLink = imageLink;
+    } catch (error) {
+      Fluttertoast.showToast(msg: error.toString());
+    }
   }
 
   Widget build(BuildContext context) {
     getValues(String id, double amount) {
+    //  getValue();
       if (id == "bitcoin") {
-        globals.total+=bitcoin * amount;
+        globals.total += bitcoin * amount;
         return bitcoin * amount;
       } else if (id == "ethereum") {
-         globals.total+=ethereum * amount;
+        globals.total += ethereum * amount;
         return ethereum * amount;
       } else if (id == "tether") {
-          globals.total+=tether * amount;
+        globals.total += tether * amount;
         return tether * amount;
       } else if (id == "dogecoin") {
-          globals.total+=dogecoin * amount;
+        globals.total += dogecoin * amount;
         return dogecoin * amount;
       } else if (id == "binancecoin") {
-          globals.total+=binancecoin * amount;
+        globals.total += binancecoin * amount;
         return binancecoin * amount;
       } else if (id == "ripple") {
-          globals.total+=ripple * amount;
+        globals.total += ripple * amount;
         return ripple * amount;
       }
     }
@@ -73,26 +100,27 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.lightGreen,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right:23.0),
-            child: IconButton( icon: Icon(
-              Icons.account_box_rounded,
-             size: 50,
-             color: Colors.white,
-            ),
-            onPressed: () {
-                Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => ProfileView()),
+            padding: const EdgeInsets.only(right: 23.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.account_box_rounded,
+                size: 50,
+                color: Colors.white,
               ),
-            );
-            },),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => ProfileView(GlobalImageLink)),
+                  ),
+                );
+              },
+            ),
           )
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-          
           decoration: BoxDecoration(
             color: Colors.lightGreen,
           ),
@@ -154,7 +182,6 @@ class _HomeViewState extends State<HomeView> {
                     );
                   }),
             ),
-           
           ),
         ),
       ),

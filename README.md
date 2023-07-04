@@ -21,7 +21,9 @@ This project is a starting point for a Flutter application.
 
 #### API
 ## used transaction method of firestore to read and add value of bitcoin if i wanted to add 3 bitcoin and it already have 4 so it will first read 4 and then add 3 to it
+### When you write onPressed: _handleButtonPress(), you are actually invoking the _handleButtonPress function immediately and assigning its return value to the onPressed property. This is not the desired behavior because the onPressed property expects a callback function, not the result of a function call.
 
+### To fix this, you should pass the function reference without invoking it by removing the parentheses. Here's the correct way to assign the _handleButtonPress function as the onPressed callback:
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
