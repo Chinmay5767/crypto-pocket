@@ -31,9 +31,9 @@ dependencies:
     sdk: flutter
 
   # FlutterFire Dependencies
-  firebase_auth: ^4.2.0
+  firebase_auth: ^4.7.1
   cloud_firestore: ^4.8.2
-  firebase_core : ^2.4.0
+  firebase_core: ^2.15.0
 
   http: ^0.13.5
   
@@ -48,12 +48,12 @@ dependencies:
 #  custom_dropdown: ^0.0.2
   flutter_dropdown: ^1.0.1+hotfix.1
   simple_animations: ^5.0.0+3
-  fluttertoast: ^8.1.2
+  
   image_picker: ^1.0.0
   permission_handler: ^10.2.0
   firebase_storage: ^11.0.15
   
-  flutter_native_image: ^0.0.6+1
+ 
   
 
 dev_dependencies:
@@ -108,3 +108,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+   
+# Splash Screen Settings
+flutter_native_splash:
+  #general
+  background_image: "asset/back_auth.jpeg"
+  android_12:
+    image: asset/back_auth.jpeg
+    # icon_background_color: "#FFD1A6"

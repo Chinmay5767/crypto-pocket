@@ -6,7 +6,7 @@ import 'dart:ui';
 import 'package:crypto_pocket/ui/profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:image_picker/image_picker.dart';
 import '../net/flutterfire_function.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
@@ -55,15 +55,15 @@ class _RegisterState extends State<Register> {
     Uint8List img = await pickImage(ImageSource.gallery);
     setState(() {
       _image = img;
-      saveProfile();
+     
     });
   }
-  
+
   void saveProfile() async {
-    String? _name = user?.displayName ?? user?.email;
-    String Resp = await StoreData().saveData(file: _image!, name: _name!);
+    String _name = _UserNameFeild.text;
+    String Resp = await StoreData().saveData(file: _image!, name: _name);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +74,8 @@ class _RegisterState extends State<Register> {
           ),
           centerTitle: true,
           elevation: 0,
-          backgroundColor: Color.fromARGB(255, 7, 57, 142)),
+          backgroundColor: Color.fromARGB(255, 40, 53, 147)
+          ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -218,7 +219,7 @@ class _RegisterState extends State<Register> {
                                     _EmailFeild.text,
                                     _PasswordFeild.text,
                                     _UserNameFeild.text);
-                              //  saveProfile();
+                                  saveProfile();
                                 if (shouldNavigate) {
                                   //navigate
                                   Navigator.push(

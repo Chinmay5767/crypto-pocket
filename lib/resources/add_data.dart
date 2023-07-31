@@ -7,8 +7,8 @@ final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class StoreData {
-  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
-    Reference ref = _storage.ref().child(childName).child('id');
+  Future<String> uploadImageToStorage(String Name, Uint8List file) async {
+    Reference ref = _storage.ref().child('profileImage').child(Name);
     UploadTask uploadTask = ref.putData(file);
     TaskSnapshot Snapshot = await uploadTask;
     String downloadUrl = await Snapshot.ref.getDownloadURL();
@@ -21,15 +21,16 @@ class StoreData {
   }) async {
     String resp = "some error ocurred";
     try {
-      String imageUrl = await uploadImageToStorage('profileImage', file);
-      await _firestore.collection('userProfile').add({'imageLink': imageUrl,
-      'name': name});
+      String imageUrl = await uploadImageToStorage(name, file);
+      await _firestore
+          .collection('userProfile')
+          .add({'imageLink': imageUrl, 'name': name});
       resp = "success";
-     
+
       return resp;
     } catch (err) {
       resp = err.toString();
-       print(resp + "----------------");
+      print(resp + "----------------");
       return resp;
     }
   }

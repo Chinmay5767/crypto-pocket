@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:crypto_pocket/ui/profile_view.dart';
 import 'package:crypto_pocket/ui/register.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../net/flutterfire_function.dart';
 import 'package:crypto_pocket/ui/homeView.dart';
 import '../global.dart' as global;
@@ -55,12 +55,22 @@ class _AuthenticationState extends State<Authentication> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         // ignore: prefer_const_constructors
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("asset/back_auth.jpeg"),
-            fit: BoxFit.cover,
+       decoration: BoxDecoration(
+            gradient: LinearGradient(
+              // Where the linear gradient begins and ends
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              // Add one stop for each color. Stops should increase from 0 to 1
+              stops: [0.1, 0.5, 0.7, 0.9],
+              colors: [
+                // Colors are easy thanks to Flutter's Colors class.
+                Color.fromARGB(255, 40, 53, 147),
+                Color.fromARGB(255, 48, 63, 159),
+                Color.fromARGB(255, 57, 73, 171),
+                Color.fromARGB(255, 92, 107, 192),
+              ],
+            ),
           ),
-        ),
 
         child: BackdropFilter(
           filter: new ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),

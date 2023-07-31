@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../global.dart' as global;
 import '../global.dart' as globals;
 import '../model/firestoreImage.dart';
@@ -31,18 +31,23 @@ class _HomeViewState extends State<HomeView> {
     getValue();
     String? name = user?.displayName ?? user?.email;
     getImageLinkForName(name!);
+    
   }
 
   getValue() async {
     bitcoin = await getPrice('bitcoin');
-
+    if (bitcoin == 0) bitcoin = 2541727.0;
     ethereum = await getPrice('ethereum');
+    if (ethereum == 0) ethereum = 160391.00;
     tether = await getPrice('tether');
+    if (tether == 0) tether = 82.04;
     dogecoin = await getPrice('dogecoin');
+    if (dogecoin == 0) dogecoin = 5.60;
     binancecoin = await getPrice('binancecoin');
+    if (binancecoin == 0) binancecoin = 20102.00;
     ripple = await getPrice('ripple');
-
-     setState(() {});
+    if (ripple == 0) ripple = 39.92;
+    setState(() {});
   }
 
   // image url fetching
@@ -65,13 +70,13 @@ class _HomeViewState extends State<HomeView> {
 
       GlobalImageLink = imageLink;
     } catch (error) {
-      Fluttertoast.showToast(msg: error.toString());
+     
     }
   }
 
   Widget build(BuildContext context) {
     getValues(String id, double amount) {
-    //  getValue();
+      //  getValue();
       if (id == "bitcoin") {
         globals.total += bitcoin * amount;
         return bitcoin * amount;
